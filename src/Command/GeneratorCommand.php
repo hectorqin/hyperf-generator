@@ -413,7 +413,12 @@ class GeneratorCommand extends HyperfCommand
      */
     public static function singular($value)
     {
-        if ($value == 'goodses') return 'goods';
+        if (strpos($value, 'goodses') !== false){
+            return str_replace('goodses', 'goods', $value);
+        }
+        if (strpos($value, 'contracts') !== false){
+            return str_replace('contracts', 'contract', $value);
+        }
         return Str::singular($value);
     }
 
@@ -610,7 +615,7 @@ class GeneratorCommand extends HyperfCommand
                     $updateFieldStr .= "'{$name}' => \$id,\n";
 
                     // 生成 model 注释
-                    $modelDoc .= " * @property {$field['DATA_TYPE_IN_PHP']} \${$field['COLUMN_NAME']} {$field['COLUMN_COMMENT']}\r\n";
+                    $modelDoc .= " * @property {$field['DATA_TYPE_IN_PHP']} \${$field['COLUMN_NAME']} {$field['COLUMN_COMMENT']}\n";
                 } else {
                     // 判断时间字段
                     $isTimeField = false;
@@ -628,10 +633,10 @@ class GeneratorCommand extends HyperfCommand
                     }
 
                     if ($isTimeField) {
-                        $modelDoc .= " * @property \Carbon\Carbon \${$field['COLUMN_NAME']} {$field['COLUMN_COMMENT']}\r\n";
+                        $modelDoc .= " * @property \Carbon\Carbon \${$field['COLUMN_NAME']} {$field['COLUMN_COMMENT']}\n";
                     } else {
                         // 生成 model 注释
-                        $modelDoc .= " * @property {$field['DATA_TYPE_IN_PHP']} \${$field['COLUMN_NAME']} {$field['COLUMN_COMMENT']}\r\n";
+                        $modelDoc .= " * @property {$field['DATA_TYPE_IN_PHP']} \${$field['COLUMN_NAME']} {$field['COLUMN_COMMENT']}\n";
                     }
 
                     $isIgnored = in_array($name, $config['ignoreFields']);
