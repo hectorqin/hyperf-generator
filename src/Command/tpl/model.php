@@ -3,7 +3,7 @@ declare (strict_types=1);
 namespace App\Model;
 
 use <?=$mBase?>;
-use Z\HyperfThinkphp\Model\Concerns\SoftDeletes;
+use App\Kernel\Model\Concerns\SoftDeletes;
 
 <?=$modelDoc?>
 

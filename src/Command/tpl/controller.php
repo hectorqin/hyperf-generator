@@ -129,13 +129,13 @@ class <?=$modelName?>Controller extends <?=$cBaseName?>
      */
     public function read(int $id = 0, $with='', array $readBy = null)
     {
-        if (empty($readBy) && (!$id || (int) $id <= 0)) {
+        if (empty($readBy) && $id <= 0) {
             throw new BusinessException(ErrorCode::ARGS_WRONG, '参数错误');
         }
         if ($id) {
-            $<?=$modelInstance?> = ($with ? <?=$modelName?>::with($with) : <?=$modelName?>::query())->find((int) $id);
+            $<?=$modelInstance?> = ($with ? <?=$modelName?>::with($with) : <?=$modelName?>::query())->find($id);
         } else {
-            $<?=$modelInstance?> = ($with ? <?=$modelName?>::with($with) : <?=$modelName?>::query())->withSearch(<?=$modelName?>::$searchFields, $readBy)->get();
+            $<?=$modelInstance?> = ($with ? <?=$modelName?>::with($with) : <?=$modelName?>::query())->withSearch(<?=$modelName?>::$searchFields, $readBy)->first();
         }
         if (!$<?=$modelInstance?>) {
             throw new BusinessException(ErrorCode::DATA_NOT_FOUND, '数据不存在');
@@ -154,10 +154,10 @@ class <?=$modelName?>Controller extends <?=$cBaseName?>
      */
     public function update(int $id = 0)
     {
-        if ((!$id || (int) $id <= 0)) {
+        if ($id <= 0) {
             throw new BusinessException(ErrorCode::ARGS_WRONG, '参数错误');
         }
-        $<?=$modelInstance?> = <?=$modelName?>::find((int) $id);
+        $<?=$modelInstance?> = <?=$modelName?>::find($id);
         if (!$<?=$modelInstance?>) {
             throw new BusinessException(ErrorCode::DATA_NOT_FOUND, '数据不存在');
         }
