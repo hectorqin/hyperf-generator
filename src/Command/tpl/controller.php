@@ -113,8 +113,8 @@ class <?=$modelName?>Controller extends <?=$cBaseName?>
                 'data' => $<?=$modelInstance?>->makeHidden(\App\getHiddenFields([<?=$hiddenFieldStr?>]))
 
             ]);
-        } catch (\Throwable $e) {
-            throw new BusinessException(ErrorCode::DB_WRONG, '保存失败', $e);
+        } catch (\Throwable $th) {
+            throw new BusinessException(ErrorCode::DB_WRONG, '保存失败', $th);
         }
     }
 
@@ -185,8 +185,8 @@ class <?=$modelName?>Controller extends <?=$cBaseName?>
                 'data' => $<?=$modelInstance?>->makeHidden(\App\getHiddenFields([<?=$hiddenFieldStr?>]))
 
             ]);
-        } catch (\Throwable $e) {
-            throw new BusinessException(ErrorCode::DB_WRONG, '保存失败', $e);
+        } catch (\Throwable $th) {
+            throw new BusinessException(ErrorCode::DB_WRONG, '保存失败', $th);
         }
     }
 
@@ -222,9 +222,9 @@ class <?=$modelName?>Controller extends <?=$cBaseName?>
                 $item->tryToDelete();
                 Db::commit();
                 $success[] = $pkID;
-            } catch (\Throwable $e) {
+            } catch (\Throwable $th) {
                 Db::rollback();
-                $error[] = ErrorCode::getErrorMessage($e, [
+                $error[] = ErrorCode::getErrorMessage($th, [
                     'id' => $pkID
                 ]);
             }

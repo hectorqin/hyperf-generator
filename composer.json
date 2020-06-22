@@ -20,8 +20,8 @@
     "require": {
         "php": ">=7.2",
         "ext-swoole": ">=4.4",
-        "hyperf/framework": "1.1.*",
-        "hyperf/di": "1.1.*"
+        "hyperf/framework": ">=1.1",
+        "hyperf/di": ">=1.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",

@@ -727,10 +727,10 @@ class GeneratorCommand extends HyperfCommand
             }
 
             if ($createTime) {
-                $searchField[]  = 'create_time';
+                $searchField[]  = $createTime;
             }
             if ($updateTime) {
-                $searchField[]  = 'update_time';
+                $searchField[]  = $updateTime;
             }
             $searchFieldStr = array_reduce($searchField, function ($carry, $item) {
                 return $carry .= "'{$item}',";
