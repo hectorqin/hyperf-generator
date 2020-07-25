@@ -182,7 +182,7 @@ class <?=$modelName?> extends <?=$mBaseName?>
      * @param mixed $data 数据
      * @return void
      */
-    public function searchCreateTimeAttr($builder, $value, $data)
+    public function searchCreatedAtAttr($builder, $value, $data)
     {
         if (is_null($value)) {
             return;
@@ -201,7 +201,7 @@ class <?=$modelName?> extends <?=$mBaseName?>
      * @param mixed $data 数据
      * @return void
      */
-    public function searchUpdateTimeAttr($builder, $value, $data)
+    public function searchUpdatedAtAttr($builder, $value, $data)
     {
         if (is_null($value)) {
             return;
@@ -224,12 +224,12 @@ class <?=$modelName?> extends <?=$mBaseName?>
     public function searchVarCharAttr($builder, $field, $value)
     {
         if (is_string($value)) {
-            $builder->where($field, '=', $value);
+            $builder->where(static::TABLE . '.' . $field, '=', $value);
         } else if (is_array($value)) {
             if ($value[0] === 'like' && isset($value[1])) {
-                $builder->where($field, 'like', $value[1]);
+                $builder->where(static::TABLE . '.' . $field, 'like', $value[1]);
             } else {
-                $builder->whereIn($field, $value);
+                $builder->whereIn(static::TABLE . '.' . $field, $value);
             }
         }
     }
@@ -250,18 +250,18 @@ class <?=$modelName?> extends <?=$mBaseName?>
     {
         if (!is_array($value)) {
             if ($value === 0 || $value === '0') {
-                $builder->where($field, '=', 0);
+                $builder->where(static::TABLE . '.' . $field, '=', 0);
             } else {
                 if (is_string($value)) {
                     $value = strtotime($value) ?: $value;
                 }
-                $builder->where($field, '=', $value);
+                $builder->where(static::TABLE . '.' . $field, '=', $value);
             }
         } else if (count($value) == 1) {
             if (is_string($value[0])) {
                 $value[0] = strtotime($value[0]) ?: $value[0];
             }
-            $builder->where($field, '>=', $value[0]);
+            $builder->where(static::TABLE . '.' . $field, '>=', $value[0]);
         } else if (count($value) > 1) {
             if (is_string($value[0])) {
                 $value[0] = strtotime($value[0]) ?: $value[0];
@@ -269,7 +269,7 @@ class <?=$modelName?> extends <?=$mBaseName?>
             if (is_string($value[1])) {
                 $value[1] = strtotime($value[1]) ?: $value[1];
             }
-            $builder->whereBetween($field, $value);
+            $builder->whereBetween(static::TABLE . '.' . $field, $value);
         }
     }
 
@@ -287,11 +287,11 @@ class <?=$modelName?> extends <?=$mBaseName?>
     public function searchNumberZoneAttr($builder, $field, $value)
     {
         if (!is_array($value)) {
-            $builder->where($field, '=', $value);
+            $builder->where(static::TABLE . '.' . $field, '=', $value);
         } else if (count($value) == 1) {
-            $builder->where($field, '>=', $value[0]);
+            $builder->where(static::TABLE . '.' . $field, '>=', $value[0]);
         } else if (count($value) > 1) {
-            $builder->whereBetween($field, $value);
+            $builder->whereBetween(static::TABLE . '.' . $field, $value);
         }
     }
 
@@ -308,9 +308,9 @@ class <?=$modelName?> extends <?=$mBaseName?>
     public function searchEnumAttr($builder, $field, $value)
     {
         if (!is_array($value)) {
-            $builder->where($field, '=', (int) $value);
+            $builder->where(static::TABLE . '.' . $field, '=', (int) $value);
         } else {
-            $builder->whereIn($field, $value);
+            $builder->whereIn(static::TABLE . '.' . $field, $value);
         }
     }
 

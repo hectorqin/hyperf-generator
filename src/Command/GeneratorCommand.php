@@ -494,7 +494,7 @@ class GeneratorCommand extends HyperfCommand
 
         if ($config['mBase']) {
             $reflectionClass = new \ReflectionClass($config['mBase']);
-            $config['baseModelCorrect'] = $reflectionClass->hasMethod('searchCreateTimeAttr');
+            $config['baseModelCorrect'] = $reflectionClass->hasMethod('searchVarCharAttr');
         }
         if ($config['cBase']) {
             $reflectionClass = new \ReflectionClass($config['cBase']);
